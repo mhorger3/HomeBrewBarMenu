@@ -1,0 +1,25 @@
+<div class="beer-row">
+
+  <div class="beer-left">
+
+    <div class="beer-logo"></div>
+
+    <div class="beer-text">
+
+      <div class="beer-name">
+        {{ beer().name }}
+      </div>
+
+      <div class="beer-sub">
+        {{ beer().style }} • {{ beer().abv }}% ABV
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="beer-price">
+    {{ beer().price }}
+  </div>
+
+</div>

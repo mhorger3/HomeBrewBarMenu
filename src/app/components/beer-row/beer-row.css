@@ -1,0 +1,36 @@
+.beer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.beer-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.beer-logo {
+  width: 38px;
+  height: 38px;
+  background: #222;
+  border-radius: 6px;
+}
+
+.beer-name {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.beer-sub {
+  font-size: 13px;
+  color: #aaa;
+}
+
+.beer-price {
+  font-size: 18px;
+  color: #ffd36a;
+}

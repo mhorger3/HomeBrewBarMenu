@@ -1,0 +1,62 @@
+<div class="header">
+  BEERS ON TAP
+</div>
+
+<div
+  class="stage"
+>
+
+  @for(section of sections(); track section.title){
+
+    <div class="column">
+
+      <div class="section-title">
+        {{ section.title }}
+      </div>
+
+      <!-- PAGE A -->
+      <div
+        class="page"
+        [class.fade-out]="transitioning()"
+      >
+
+        @for(beer of section.pages[
+          layout.getPageIndex()()[section.title] % section.pages.length
+        ]; track beer.id){
+
+          <app-beer-row [beer]="beer"></app-beer-row>
+
+        }
+
+      </div>
+
+      <!-- PAGE B (buffer next page) -->
+      <div
+        class="page next"
+        [class.fade-in]="transitioning()"
+      >
+
+        @for(beer of section.pages[
+          ((layout.getPageIndex()()[section.title] + 1) % section.pages.length)
+        ]; track beer.id){
+
+          <app-beer-row [beer]="beer"></app-beer-row>
+
+        }
+
+      </div>
+
+    </div>
+
+  }
+
+</div>
+
+<div class="footer">
+  <div class="ticker">
+    Half price happy hour 3–5pm every Tuesday
+  </div>
+  <div class="brand">
+    Digital Tap System
+  </div>
+</div>
