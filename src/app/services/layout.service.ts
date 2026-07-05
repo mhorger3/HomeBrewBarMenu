@@ -92,7 +92,6 @@ export class LayoutService {
     if (s.includes('sour')) return 'Sours';
     if (s.includes('farmhouse') || s.includes('saison') || s.includes('wild')) return 'Wild Ales';
     if (s.includes('ipa')) return 'IPAs';
-    if (s.includes('stout')) return 'Stouts';
     if (s.includes('porter')) return 'Porters';
     if (s.includes('lager')) return 'Lagers';
     if (s.includes('pils')) return 'Pilsners';

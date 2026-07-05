@@ -89,6 +89,7 @@ html, body {
   border-radius: 6px;
   background: #222;
   flex-shrink: 0;
+  object-fit: contain;
 }
 
 /* text block */
