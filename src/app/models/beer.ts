@@ -13,4 +13,13 @@ export interface Beer {
     abv: number;
 
     price: string;
+
+    year: string;
+
+    quantity: number;
+
+    volume: string;
+
+    logoUrl: string;
+
 }

@@ -2,7 +2,13 @@
 
   <div class="beer-left">
 
-    <div class="beer-logo"></div>
+    <img
+      class="beer-logo"
+      [src]="beer().logoUrl || 'assets/logos/default-beer.png'"
+      [alt]="beer().name"
+      loading="lazy"
+      onerror="this.src='assets/logos/default-beer.png'"
+    />
 
     <div class="beer-text">
 
@@ -11,7 +17,7 @@
       </div>
 
       <div class="beer-sub">
-        {{ beer().style }} • {{ beer().abv }}% ABV
+        {{ beer().style }} • {{ beer().brewery}} • {{ beer().year }} • {{ beer().abv }}% ABV • {{ beer().volume }} • {{ beer().quantity }} bottles
       </div>
 
     </div>

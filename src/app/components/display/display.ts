@@ -1,83 +1,99 @@
-import { Component, computed, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject,
+  signal
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { BeerRow } from '../beer-row/beer-row';
 
 import { SlideService } from '../../services/slide.service';
-import { SlidePlayerService } from '../../services/slide-player.service';
 import { LayoutService } from '../../services/layout.service';
-
-import { BeerRow } from '../beer-row/beer-row';
+import { BeerSection } from '../../models/beer-section';
 
 @Component({
   selector: 'app-display',
   standalone: true,
-  imports: [CommonModule, BeerRow],
+  imports: [
+    CommonModule,
+    BeerRow
+  ],
   templateUrl: './display.html',
   styleUrl: './display.css'
 })
-export class Display {
+export class Display implements OnInit {
 
   private slideService = inject(SlideService);
-  private player = inject(SlidePlayerService);
-  layout = inject(LayoutService);
-  transitioning = this.layout.transitioning;
-  slides = toSignal(this.slideService.getSlides(), { initialValue: [] });
-  sectionPageIndex: Record<string, number> = {};
-  currentSlide = computed(() => {
+  private layout = inject(LayoutService);
 
-    const slides = this.slides();
-    if (!slides.length) return null;
+  // All grouped/paginated beer sections
+  readonly sections = signal<BeerSection[]>([]);
 
-    return slides[this.player.currentIndex()];
-  });
+  // Current page for each category
+  readonly pageIndex = signal<Record<string, number>>({});
 
-  sections = computed(() => {
+  // Used for CSS transitions
+  readonly transitioning = signal(false);
 
-  const slide = this.currentSlide();
+  ngOnInit(): void {
 
-  if (!slide || slide.type !== 'beer') return [];
+    this.slideService.getSlides().subscribe(slides => {
 
-  return this.layout.groupAndPaginate(slide.data);
+      const beerSlide = slides.find(s => s.type === 'beer');
 
-  });
+      if (!beerSlide) {
+        return;
+      }
 
-  startPageRotation(sections: any[]) {
-
-  for (const s of sections) {
-    this.sectionPageIndex[s.title] = 0;
-  }
-
-  setInterval(() => {
-
-    for (const s of sections) {
-
-      const pages = s.pages.length;
-
-      this.sectionPageIndex[s.title] =
-        (this.sectionPageIndex[s.title] + 1) % pages;
-
-    }
-
-  }, 8000); // slower than slide rotation
-
-}
-
- constructor() {
-
-  this.slideService.getSlides().subscribe(slides => {
-
-    this.player.setSlides(slides);
-    this.player.start();
-
-    const beerSlide = slides.find(s => s.type === 'beer');
-
-    if (beerSlide) {
       const grouped = this.layout.groupAndPaginate(beerSlide.data);
 
-      this.layout.startPagination(grouped.map(g => g.title));
-    }
+      this.sections.set(grouped);
 
-  });
+      // Initialize every category to page 0
+      const indexes: Record<string, number> = {};
+
+      grouped.forEach(section => {
+        indexes[section.title] = 0;
+      });
+
+      this.pageIndex.set(indexes);
+
+      this.startPagination();
+
+    });
 
   }
+
+  private startPagination(): void {
+
+    setInterval(() => {
+
+      this.transitioning.set(true);
+
+      setTimeout(() => {
+
+        this.pageIndex.update(current => {
+
+          const next = { ...current };
+
+          for (const section of this.sections()) {
+
+            next[section.title] =
+              ((next[section.title] ?? 0) + 1) %
+              section.pages.length;
+
+          }
+
+          return next;
+
+        });
+
+        this.transitioning.set(false);
+
+      }, 350);
+
+    }, 8000);
+
+  }
+
 }
