@@ -59,8 +59,8 @@ export class LayoutService {
     if (s.includes('sour')) return 'Sours';
     if (s.includes('farmhouse') || s.includes('saison') || s.includes('wild')) return 'Wild / Farmhouses';
     if (s.includes('lager') || s.includes('pils') || s.includes('wheat') || s.includes('shandy')) return 'Lagers, Pils, Wheat';
-    if (s.includes('cider') || s.includes('seltzer')) return 'Ciders & Selzters';
-    if (s.includes('quad') || s.includes('ale') || s.includes('tripel') || s.includes('ipa')) return 'Pale, Strong Ales';
+    if (s.includes('cider') || s.includes('seltzer')) return 'Ciders / Selzters';
+    if (s.includes('quad') || s.includes('ale') || s.includes('tripel') || s.includes('ipa')) return 'Pale / Strong Ales';
     return 'Other';
   }
 }
