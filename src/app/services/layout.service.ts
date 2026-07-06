@@ -1,24 +1,20 @@
 import { Injectable, signal } from '@angular/core';
 import { Beer } from '../models/beer';
+import { BeerSection } from '../models/beer-section';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LayoutService {
 
-  private PAGE_SIZE = 6;
+    private readonly PAGE_SIZE = 3;
 
-  private pageIndex = signal<Record<string, number>>({});
-  transitioning = signal(false);
-  getPageIndex() {
-    return this.pageIndex.asReadonly();
-  }
-
-  groupAndPaginate(beers: Beer[]) {
+  groupAndPaginate(beers: Beer[]): BeerSection[] {
 
     const groups: Record<string, Beer[]> = {};
 
     for (const beer of beers) {
+
       const category = this.getCategory(beer);
 
       if (!groups[category]) {
@@ -26,21 +22,26 @@ export class LayoutService {
       }
 
       groups[category].push(beer);
+
     }
 
     return Object.keys(groups).map(title => {
 
-      const list = groups[title];
+    const list = groups[title]
+    .slice()
+    .sort((a, b) => a.name.localeCompare(b.name));
 
-      return {
+    return {
         title,
         pages: this.paginate(list, this.PAGE_SIZE)
-      };
+    };
 
     });
+
   }
 
-  paginate(list: Beer[], size: number): Beer[][] {
+  private paginate(list: Beer[], size: number): Beer[][] {
+
     const pages: Beer[][] = [];
 
     for (let i = 0; i < list.length; i += size) {
@@ -48,57 +49,18 @@ export class LayoutService {
     }
 
     return pages;
+
   }
 
-  startPagination(titles: string[], interval = 8000) {
-
-  const initial: Record<string, number> = {};
-
-  for (const t of titles) {
-    initial[t] = 0;
-  }
-
-  this.pageIndex.set(initial);
-
-  setInterval(() => {
-
-    this.transitioning.set(true);
-
-    setTimeout(() => {
-
-      this.pageIndex.update(state => {
-
-        const next = { ...state };
-
-        for (const t of titles) {
-          next[t] = (next[t] ?? 0) + 1;
-        }
-
-        return next;
-
-      });
-
-      this.transitioning.set(false);
-
-    }, 400); // transition window
-
-  }, interval);
-
-    }
 
   private getCategory(beer: Beer): string {
     const s = beer.style.toLowerCase();
-    if (s.includes('stout')) return 'Stouts';
+    if (s.includes('stout') || s.includes('porter')) return 'Stouts / Porters';
     if (s.includes('sour')) return 'Sours';
-    if (s.includes('farmhouse') || s.includes('saison') || s.includes('wild')) return 'Wild Ales';
-    if (s.includes('ipa')) return 'IPAs';
-    if (s.includes('porter')) return 'Porters';
-    if (s.includes('lager')) return 'Lagers';
-    if (s.includes('pils')) return 'Pilsners';
-    if (s.includes('wheat')) return 'Wheat';
-    if (s.includes('cider')) return 'Ciders';
-    if (s.includes('seltzer')) return 'Selzters';
-    if (s.includes('quad') || s.includes('ale') || s.includes('tripel')) return 'Dark Ales';
+    if (s.includes('farmhouse') || s.includes('saison') || s.includes('wild')) return 'Wild / Farmhouses';
+    if (s.includes('lager') || s.includes('pils') || s.includes('wheat') || s.includes('shandy')) return 'Lagers, Pils, Wheat';
+    if (s.includes('cider') || s.includes('seltzer')) return 'Ciders & Selzters';
+    if (s.includes('quad') || s.includes('ale') || s.includes('tripel') || s.includes('ipa')) return 'Pale, Strong Ales';
     return 'Other';
   }
 }
