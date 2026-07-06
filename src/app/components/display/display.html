@@ -1,45 +1,157 @@
-<div class="header">
-  BEERS ON TAP
-</div>
+@if (!isMobile()) {
+  <div class="header">
+    BEERS ON TAP
+  </div>
 
-<div
-  class="stage"
->
+  <div
+    class="stage"
+  >
 
-  @for(section of sections(); track section.title){
+    @for(section of sections(); track section.title){
 
-  <div class="column">
+    <div class="column">
 
-    <div class="section-title">
-      {{ section.title }}
+      <div class="section-title">
+        {{ section.title }}
+      </div>
+
+      <div
+        class="page"
+        [class.fade-out]="transitioning()"
+      >
+
+        @for(
+          beer of section.pages[
+            pageIndex()[section.title] ?? 0
+          ];
+          track beer.id
+        ){
+
+          <app-beer-row [beer]="beer"></app-beer-row>
+
+        }
+
+      </div>
+
     </div>
 
-    <div
-      class="page"
-      [class.fade-out]="transitioning()"
-    >
+  }
 
-      @for(
-        beer of section.pages[
-          pageIndex()[section.title] ?? 0
-        ];
-        track beer.id
-      ){
+  </div>
 
-        <app-beer-row [beer]="beer"></app-beer-row>
+  <div class="footer">
+    <div class="ticker">
+      Last updated: July 6th, 2026
+    </div>
+  </div>
+} @else {
+  <div class="mobile-container">
+    <div class="mobile-header">
+
+    <div class="header">
+      BEERS ON TAP
+    </div>
+
+      <div class="search-container">
+       <span class="search-icon">🔍</span>
+
+        <input
+            class="search-input"
+            type="text"
+            placeholder="Search beers, breweries..."
+            [value]="searchText()"
+            (input)="searchText.set($any($event.target).value)"
+        />
+        </div>
+      <div class="category-bar">
+
+      @for(category of categories(); track category){
+
+          <button
+              class="category-chip"
+              [class.selected]="selectedCategory() === category"
+              (click)="selectedCategory.set(category)">
+
+              {{ category }}
+
+          </button>
 
       }
-
+      </div>
     </div>
+      <div class="mobile-subtitle">
 
+        {{ filteredSections().reduce((c,s)=>c+s.beers.length,0) }}
+        beers available
+
+      </div>
+
+      <div class="mobile-list">
+
+      @for(section of filteredSections(); track section.title){
+
+          <h2>{{ section.title }}</h2>
+
+          @for(beer of section.beers; track beer.id){
+
+              <div
+                  class="beer-card">
+
+                  <img
+                      class="beer-logo"
+                      [src]="beer.logoUrl || 'assets/images/default-beer.png'">
+
+                  <div class="beer-info">
+
+                      <div class="beer-name">
+
+                          {{ beer.name }}
+
+                      </div>
+
+                      <div>
+
+                          {{ beer.brewery }}
+
+                      </div>
+
+                      <div>
+
+                          {{ beer.style }}
+
+                      </div>
+
+                      <div>
+
+                          {{ beer.year }}
+
+                      </div>
+
+                      <div>
+
+                          {{ beer.abv }}% ABV
+
+                      </div>
+
+                      <div>
+
+                          {{ beer.quantity }} bottles
+
+                      </div>
+
+                  </div>
+
+                  <div class="beer-price">
+
+                      {{ beer.price }}
+
+                  </div>
+
+              </div>
+
+          }
+
+      }
+    </div>
   </div>
-
 }
-
-</div>
-
- <div class="footer">
-  <div class="ticker">
-    Last updated: July 5th, 2026
-  </div>
-</div>
