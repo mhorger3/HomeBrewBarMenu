@@ -134,19 +134,6 @@
         "logoUrl": "/assets/logos/schoffernofer.jpeg"
       },
       {
-        "id": 115,
-        "tap": 1,
-        "name": "Summer Love",
-        "brewery": "Victory Brewing",
-        "style": "Blonde / Golden Ale",
-        "abv": 5.2,
-        "price": "$5",
-        "year": "2026",
-        "quantity": 1,
-        "volume": "12oz",
-        "logoUrl": "/assets/logos/summer-love.jpeg"
-      }, 
-      {
         "id": 116,
         "tap": 1,
         "name": "Merry Merry",
