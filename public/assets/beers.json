@@ -142,7 +142,7 @@
         "abv": 5.2,
         "price": "$5",
         "year": "2026",
-        "quantity": 2,
+        "quantity": 1,
         "volume": "12oz",
         "logoUrl": "/assets/logos/summer-love.jpeg"
       }, 
@@ -743,7 +743,46 @@
         "quantity": 1,
         "volume": "12oz",
         "logoUrl": "/assets/logos/ciderboys-raspberry.jpeg"
-      }                                                            
+      },
+	  {
+        "id": 165,
+        "tap": 1,
+        "name": "Imperial Huckleberry",
+        "brewery": "Ciderboys Hard Cider",
+        "style": "Cider - Imperial",
+        "abv": 8,
+        "price": "$8",
+        "year": "2025",
+        "quantity": 11,
+        "volume": "12oz",
+        "logoUrl": "/assets/logos/ciderboys-huckleberry.jpeg"
+      },
+	  {
+        "id": 166,
+        "tap": 1,
+        "name": "There She Gose",
+        "brewery": "Victory Brewing",
+        "style": "Sour - Fruited Gose",
+        "abv": 4.8,
+        "price": "$7",
+        "year": "2026",
+        "quantity": 3,
+        "volume": "16oz",
+        "logoUrl": "/assets/logos/there-she-gose.jpeg"
+      },
+{
+        "id": 167,
+        "tap": 1,
+        "name": "Dill Pickle - SuckerPunch",
+        "brewery": "DESTIHL Brewery",
+        "style": "Sour - Ohter Gose",
+        "abv": 5.2,
+        "price": "$6",
+        "year": "2026",
+        "quantity": 4,
+        "volume": "12oz",
+        "logoUrl": "/assets/logos/suckerpunch.jpeg"
+      }	  
     ]
   }
 ]
