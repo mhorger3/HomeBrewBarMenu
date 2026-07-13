@@ -82,8 +82,11 @@
       <div class="mobile-subtitle">
 
         {{ filteredSections().reduce((c,s)=>c+s.beers.length,0) }}
-        beers available
+        beers available •
 
+        ${{ totalBeerValue().toFixed(2) }}
+
+        total value
       </div>
 
       <div class="mobile-list">

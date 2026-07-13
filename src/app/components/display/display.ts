@@ -37,6 +37,22 @@ export class Display implements OnInit {
   readonly pageIndex = signal<Record<string, number>>({});
   // Used for CSS transitions
   readonly transitioning = signal(false);
+
+  readonly totalBeerCount = computed(() =>
+    this.filteredSections().reduce(
+      (count, section) => count + section.beers.length,
+      0
+    )
+  );
+
+  readonly totalBeerValue = computed(() =>
+    this.filteredSections()
+      .flatMap(section => section.beers)
+      .reduce((total, beer) => {
+        return total + parseFloat(beer.price.replace('$', ''));
+      }, 0)
+  );
+
   readonly filteredSections = computed(() => {
 
   const search = this.searchText().trim().toLowerCase();
