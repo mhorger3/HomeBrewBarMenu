@@ -12,7 +12,7 @@
         "abv": 13.7,
         "price": "$11",
         "year": "2021 - 2026",
-        "quantity": 26,
+        "quantity": 25,
         "volume": "12oz",
         "logoUrl": "/assets/logos/parabola.jpeg"
       },
@@ -116,7 +116,7 @@
         "abv": 5,
         "price": "$6",
         "year": "2023",
-        "quantity": 6,
+        "quantity": 5,
         "volume": "12oz",
         "logoUrl": "/assets/logos/xpa.jpeg"
       },
@@ -207,7 +207,7 @@
         "abv": 8,
         "price": "$7",
         "year": "2025",
-        "quantity": 3,
+        "quantity": 2,
         "volume": "16oz",
         "logoUrl": "/assets/logos/victory-cherry.jpeg"
       },
